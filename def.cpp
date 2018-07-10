@@ -18,6 +18,8 @@ bulk_data :: bulk_data()
 	bin = nullptr;
 	len = nullptr;
 	sum_bin = nullptr;
+	p_ad = nullptr;
+	p_rm = nullptr;
 }
 
 void bulk_data :: clean_self()
@@ -35,6 +37,8 @@ void bulk_data :: clean_self()
 	}
 	delete[] len;
 	delete[] sum_bin;
+	delete[] p_ad;
+	delete[] p_rm;
 	num_bin = 0;
 }
 
@@ -56,6 +60,8 @@ bulk_data& bulk_data :: operator = (const bulk_data& B)
 		}
 		len[t1] = B.len[t1];
 		sum_bin[t1] = B.sum_bin[t1];
+		p_ad[t1] = B.p_ad[t1];
+		p_rm[t1] = B.p_rm[t1];
 	}
 }
 
@@ -65,6 +71,8 @@ void bulk_data :: set_num_bin(int num)
 	bin = new unit[num_bin];
 	len = new int[num_bin];
 	sum_bin = new int[num_bin];
+	p_ad = new double[num_bin];
+	p_rm = new double[num_bin];
 }
 
 void bulk_data :: add_data(int t1, int data)
@@ -95,6 +103,8 @@ void bulk_data :: mv_data(int bin1, int bin2, int pos1)
 	for (b2_p1=&bin[bin2]; b2_p1->next != nullptr; b2_p1 = b2_p1->next) ;
 	b2_p1->next = b1_p1;
 	b1_p1->pre = b2_p1;
+	sum_bin[bin1] -= b1_p1->x;
+	sum_bin[bin2] += b1_p1->x;
 }
 
 void bulk_data :: sum_up_bin()
@@ -113,6 +123,10 @@ void bulk_data :: import_data(int * dat1, int num)
 		t2 = t1%num_bin;
 		this->add_data(t2,dat1[t1]);
 	}
+}
+
+void find_p_rm(bulk_data & T, double adjust)
+{
 }
 
 //------------debug-------------

@@ -15,5 +15,7 @@ int main()
 	bins1.print_bin(2);
 	bins1.print_bin(3);
 	bins1.print_sum_bin();	
+	bins1.mv_data(1,3,1);
+	bins1.print_sum_bin();	
 	return 0;
 }
